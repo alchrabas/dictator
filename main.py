@@ -111,7 +111,8 @@ def render_dictation_text(tokens, idx):
     output_text = []
     for token in tokens[:idx]:
         output_text.append(token.letter)
-    output_text.append(Colors.RED + "?[" + POTENTIAL_MATCHES[tokens[idx].expected] + "]" + Colors.NORMAL)
+    if idx < len(tokens):
+        output_text.append(Colors.RED + "?[" + POTENTIAL_MATCHES[tokens[idx].expected] + "]" + Colors.NORMAL)
     for token in tokens[idx + 1:]:
         output_text.append(str(token))
     return "".join(output_text)
@@ -131,7 +132,7 @@ while not dictation_finished:
     else:
         dictation_finished = True
 
-print(render_dictation_text(tokens, len(tokens) - 1))
+print(render_dictation_text(tokens, len(tokens)))
 
 print("")
 print("You have made {} error(s):".format(len(errors)))
